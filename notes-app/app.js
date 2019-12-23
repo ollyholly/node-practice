@@ -1,10 +1,27 @@
 const chalk = require("chalk");
+const yargs = require("yargs");
 const getNotes = require("./notes.js");
 
-const command = process.argv[2];
+yargs.command({
+  command: "add",
+  describe: "Add a new note",
+  handler: () => {
+    console.log("Adding a new note!");
+  }
+});
 
-if (command) {
-  console.log(chalk.green("Your command is " + chalk.magenta(command)));
-} else {
-  console.log(chalk.red("No command given!"));
-}
+yargs.command({
+  command: "remove",
+  describe: "Remove a note",
+  handler: () => {
+    console.log("Removing a note!");
+  }
+});
+
+console.log(yargs.argv);
+
+// if (command === "add") {
+//   console.log("Adding new note!");
+// } else if (command === "remove") {
+//   console.log("Removing note!");
+// }
