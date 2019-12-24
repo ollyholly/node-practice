@@ -1,14 +1,15 @@
 const fs = require("fs");
 
-const bookData = fs.readFileSync("1-json.json").toString();
-console.log(bookData.toString());
+// const bookData = fs.readFileSync("1-json.json").toString();
+// console.log(bookData.toString());
 
-const parsedData = JSON.parse(bookData);
+// const parsedData = JSON.parse(bookData);
 
-// const book = {
-//   title: "Ego is the enemy",
-//   author: "Ryan Holiday"
-// };
+const bio = {
+  name: "Olly",
+  age: 35,
+  location: "London"
+};
 
 // const bookJSON = JSON.stringify(book);
 
