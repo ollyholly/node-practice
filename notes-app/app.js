@@ -18,6 +18,22 @@ yargs.command({
   }
 });
 
+yargs.command({
+  command: "list",
+  describe: "Display a list of notes",
+  handler: () => {
+    console.log("Here's your list of notes!");
+  }
+});
+
+yargs.command({
+  command: "read",
+  describe: "Read a single note",
+  handler: () => {
+    console.log("Reading a note.");
+  }
+});
+
 console.log(yargs.argv);
 
 // if (command === "add") {
