@@ -1,4 +1,5 @@
 const fs = require("fs");
+const chalk = require("chalk");
 
 const getNotes = () => {
   return "Your notes...";
@@ -40,16 +41,15 @@ const addNote = (title, body) => {
 const removeNote = title => {
   try {
     const notes = loadNotes();
-    const foundNote = notes.find(note => {
-      return note.title == title;
+    const filteredNotes = notes.filter(note => {
+      return note.title !== title;
     });
-    if (foundNote) {
-      const filteredNotes = notes.filter(note => note !== foundNote);
+
+    if (filteredNotes.length < notes.length) {
+      console.log(chalk.green.inverse("Note was successfully removed!"));
       saveNotes(filteredNotes);
-      console.log(filteredNotes);
-      console.log("Note was removed!");
     } else {
-      console.log("Note not found!");
+      console.log(chalk.red.inverse("Note was not found!"));
     }
   } catch (error) {
     console.log("Something went", error);
