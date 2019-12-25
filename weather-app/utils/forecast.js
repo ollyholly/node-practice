@@ -1,5 +1,4 @@
 const request = require("request");
-const dotenv = require("dotenv");
 
 const forecast = (lat, lon, callback) => {
   const weather_key = process.env.DARKSKY_TOKEN;

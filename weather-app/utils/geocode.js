@@ -1,5 +1,4 @@
 const request = require("request");
-const dotenv = require("dotenv");
 
 const geocode = (location, callback) => {
   const map_key = process.env.MAPBOX_TOKEN;
@@ -13,12 +12,13 @@ const geocode = (location, callback) => {
       callback("Can not find this location, try other query");
     } else {
       const destination = response.body.features[0].place_name;
-      const latitude = response.body.features[0].center[0];
-      const longitude = response.body.features[0].center[1];
-      callback(
-        undefined,
-        `${destination}\nLatitude: ${latitude}\nLongitude: ${longitude}`
-      );
+      const latitude = response.body.features[0].center[1];
+      const longitude = response.body.features[0].center[0];
+      // callback(
+      //   undefined,
+      //   `${destination}\nLatitude: ${latitude}\nLongitude: ${longitude}`
+      // );
+      callback(undefined, { destination, latitude, longitude });
     }
   });
 };

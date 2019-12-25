@@ -5,15 +5,23 @@ const forecast = require("./utils/forecast");
 
 dotenv.config();
 
-forecast(-75.7088, 44.1545, (error, data) => {
-  console.log("Error", error);
-  console.log("Data", data);
-});
+const location = process.argv[2];
 
-geocode("London", (error, data) => {
-  if (error) {
-    console.log("Error", error);
-  } else {
-    console.log(data);
-  }
-});
+if (!location) {
+  return console.log("Specify the location!");
+} else {
+  geocode(location, (error, data) => {
+    if (error) {
+      return console.log(error);
+    } else {
+      forecast(data.latitude, data.longitude, (error, forecastData) => {
+        if (error) {
+          console.log("Error", error);
+        } else {
+          console.log("Location:", data.destination);
+          console.log("Weather forecast:", forecastData);
+        }
+      });
+    }
+  });
+}
