@@ -19,21 +19,21 @@ yargs.command({
   },
   handler: argv => {
     notes.addNote(argv.title, argv.body);
-    // console.log(
-    //   "Adding a new note!" +
-    //     chalk.blue("\nTitle: ") +
-    //     argv.title +
-    //     chalk.blue("\nBody: ") +
-    //     argv.body
-    // );
   }
 });
 
 yargs.command({
   command: "remove",
   describe: "Remove a note",
-  handler: () => {
-    console.log("Removing a note!");
+  builder: {
+    title: {
+      describe: "Note title",
+      demandOption: true,
+      type: "string"
+    }
+  },
+  handler: argv => {
+    notes.removeNote(argv.title);
   }
 });
 

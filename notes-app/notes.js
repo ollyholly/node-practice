@@ -37,7 +37,27 @@ const addNote = (title, body) => {
   }
 };
 
+const removeNote = title => {
+  try {
+    const notes = loadNotes();
+    const foundNote = notes.find(note => {
+      return note.title == title;
+    });
+    if (foundNote) {
+      const filteredNotes = notes.filter(note => note !== foundNote);
+      saveNotes(filteredNotes);
+      console.log(filteredNotes);
+      console.log("Note was removed!");
+    } else {
+      console.log("Note not found!");
+    }
+  } catch (error) {
+    console.log("Something went", error);
+  }
+};
+
 module.exports = {
   getNotes: getNotes,
-  addNote: addNote
+  addNote: addNote,
+  removeNote: removeNote
 };
