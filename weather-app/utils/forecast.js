@@ -4,15 +4,15 @@ const forecast = (lat, lon, callback) => {
   const weather_key = process.env.DARKSKY_TOKEN;
   const url = `https://api.darksky.net/forecast/${weather_key}/${lat},${lon}?units=si`;
 
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
     if (error) {
       callback("Unable to connect to weather services!");
-    } else if (response.body.error) {
-      callback("Error: ", response.body.error);
+    } else if (body.error) {
+      callback("Error: ", body.error);
     } else {
-      const summary = response.body.daily.data[0].summary;
-      const temperature = response.body.currently.temperature;
-      const rainChance = response.body.currently.precipProbability * 100;
+      const summary = body.daily.data[0].summary;
+      const temperature = body.currently.temperature;
+      const rainChance = body.currently.precipProbability * 100;
       callback(
         undefined,
         `${summary} It is currently ${temperature} degrees out. There is ${rainChance}% chance of rain.`
