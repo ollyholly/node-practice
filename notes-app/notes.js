@@ -22,28 +22,23 @@ const saveNotes = notes => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter(note => {
-    return note.title === title;
-  });
-
+  const duplicateNotes = notes.filter(note => note.title === title);
   if (duplicateNotes.length === 0) {
     notes.push({
       title: title,
       body: body
     });
     saveNotes(notes);
-    console.log("Note added successfully!");
+    console.log(chalk.green.inverse("Note added successfully!"));
   } else {
-    console.log("Note title taken!");
+    console.log(chalk.red.inverse("Note title taken!"));
   }
 };
 
 const removeNote = title => {
   try {
     const notes = loadNotes();
-    const filteredNotes = notes.filter(note => {
-      return note.title !== title;
-    });
+    const filteredNotes = notes.filter(note => note.title !== title);
 
     if (filteredNotes.length < notes.length) {
       console.log(chalk.green.inverse("Note was successfully removed!"));
