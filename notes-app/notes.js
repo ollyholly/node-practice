@@ -22,8 +22,8 @@ const saveNotes = notes => {
 
 const addNote = (title, body) => {
   const notes = loadNotes();
-  const duplicateNotes = notes.filter(note => note.title === title);
-  if (duplicateNotes.length === 0) {
+  const duplicateNote = notes.find(note => note.title === title);
+  if (!duplicateNote) {
     notes.push({
       title: title,
       body: body
@@ -32,6 +32,18 @@ const addNote = (title, body) => {
     console.log(chalk.green.inverse("Note added successfully!"));
   } else {
     console.log(chalk.red.inverse("Note title taken!"));
+  }
+};
+
+const readNote = title => {
+  const notes = loadNotes();
+  const foundNote = notes.find(note => note.title === title);
+  if (foundNote) {
+    console.log(chalk.blue("\nHere's your note:"));
+    console.log(chalk.grey("\nTitle: ") + foundNote.title);
+    console.log(chalk.grey("Body: ") + foundNote.body + "\n");
+  } else {
+    console.log(chalk.red.inverse("Note not found!"));
   }
 };
 
@@ -54,10 +66,10 @@ const removeNote = title => {
 const listNotes = () => {
   try {
     const notes = loadNotes();
-    console.log(chalk.blue.bold("\nHere are you notes:"));
+    console.log(chalk.blue.bold("\nHere are you notes:\n"));
     notes.forEach(note => {
-      console.log(chalk.grey("\nTitle: ") + note.title);
-      console.log(chalk.grey("\nBody: ") + note.body + "\n\n--");
+      console.log(chalk.grey("> ") + note.title);
+      // console.log(chalk.grey("\nBody: ") + note.body + "\n\n--");
     });
   } catch (error) {
     console.log(chalk.red.inverse("Something went"), error);
@@ -68,5 +80,6 @@ module.exports = {
   getNotes: getNotes,
   addNote: addNote,
   removeNote: removeNote,
-  listNotes: listNotes
+  listNotes: listNotes,
+  readNote: readNote
 };
