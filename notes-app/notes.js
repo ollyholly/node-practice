@@ -51,8 +51,22 @@ const removeNote = title => {
   }
 };
 
+const listNotes = () => {
+  try {
+    const notes = loadNotes();
+    console.log(chalk.blue.bold("\nHere are you notes:"));
+    notes.forEach(note => {
+      console.log(chalk.grey("\nTitle: ") + note.title);
+      console.log(chalk.grey("\nBody: ") + note.body + "\n\n--");
+    });
+  } catch (error) {
+    console.log(chalk.red.inverse("Something went"), error);
+  }
+};
+
 module.exports = {
   getNotes: getNotes,
   addNote: addNote,
-  removeNote: removeNote
+  removeNote: removeNote,
+  listNotes: listNotes
 };
