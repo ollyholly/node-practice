@@ -1,6 +1,6 @@
+const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
-const express = require("express");
 
 const app = express();
 
@@ -39,8 +39,16 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
+  console.log(req.query);
+  console.log(req.query.address);
+  if (!req.query.address) {
+    return res.send({
+      error: "You must provide an address!"
+    });
+  }
+
   res.send({
-    location: "London",
+    location: req.query.address,
     weather: { temperature: 20, rainChance: 0.1 }
   });
 });
