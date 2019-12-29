@@ -49,23 +49,26 @@ app.get("/weather", (req, res) => {
     });
   }
 
-  geocode(req.query.address, (error, { destination, latitude, longitude }) => {
-    if (error) {
-      return res.send({ error });
-    }
-
-    forecast(latitude, longitude, (error, forecastData) => {
+  geocode(
+    req.query.address,
+    (error, { destination, latitude, longitude } = {}) => {
       if (error) {
         return res.send({ error });
       }
 
-      res.send({
-        destination,
-        weatherForecast: forecastData,
-        address: req.query.address
+      forecast(latitude, longitude, (error, forecastData) => {
+        if (error) {
+          return res.send({ error });
+        }
+
+        res.send({
+          destination,
+          weatherForecast: forecastData,
+          address: req.query.address
+        });
       });
-    });
-  });
+    }
+  );
 });
 
 app.get("/help/*", (req, res) => {
