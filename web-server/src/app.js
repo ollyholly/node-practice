@@ -1,8 +1,12 @@
 const express = require("express");
 const path = require("path");
 const hbs = require("hbs");
+const dotenv = require("dotenv");
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 
 const app = express();
+dotenv.config();
 
 // define paths for Express config
 const publicDirectoryPath = path.join(__dirname, "../public");
@@ -39,17 +43,28 @@ app.get("/help", (req, res) => {
 });
 
 app.get("/weather", (req, res) => {
-  console.log(req.query);
-  console.log(req.query.address);
   if (!req.query.address) {
     return res.send({
       error: "You must provide an address!"
     });
   }
 
-  res.send({
-    location: req.query.address,
-    weather: { temperature: 20, rainChance: 0.1 }
+  geocode(req.query.address, (error, { destination, latitude, longitude }) => {
+    if (error) {
+      return res.send({ error });
+    }
+
+    forecast(latitude, longitude, (error, forecastData) => {
+      if (error) {
+        return res.send({ error });
+      }
+
+      res.send({
+        destination,
+        weatherForecast: forecastData,
+        address: req.query.address
+      });
+    });
   });
 });
 
