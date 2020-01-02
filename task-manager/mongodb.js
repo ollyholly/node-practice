@@ -16,37 +16,12 @@ MongoClient.connect(
     const db = client.db(databaseName);
 
     db.collection("users")
-      .updateOne(
-        {
-          _id: new ObjectID("5e0de564e812620868f973e7")
-        },
-        {
-          $inc: {
-            age: 2
-          }
-        }
-      )
+      .deleteMany({ age: 35 })
       .then(result => {
         console.log(result);
       })
       .catch(error => {
-        console.log("Error!", error);
-      });
-
-    db.collection("tasks")
-      .updateMany(
-        { completed: false },
-        {
-          $set: {
-            completed: true
-          }
-        }
-      )
-      .then(result => {
-        console.log(result.modifiedCount);
-      })
-      .catch(error => {
-        console.log("Error!", error);
+        console.log(error);
       });
   }
 );
