@@ -13,6 +13,8 @@ MongoClient.connect(
       return console.log("Unable to connect to database!");
     }
 
+    const db = client.db(databaseName);
+
     db.collection("users").findOne({ name: "Jess" }, (error, user) => {
       if (error) {
         return console.log("Unable to fetch!");
