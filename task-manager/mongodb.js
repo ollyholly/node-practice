@@ -5,10 +5,6 @@ const { MongoClient, ObjectID } = require("mongodb");
 const connectionURL = "mongodb://127.0.0.1:27017";
 const databaseName = "task-manager";
 
-const id = new ObjectID();
-console.log(id);
-console.log(id.getTimestamp());
-
 MongoClient.connect(
   connectionURL,
   { useUnifiedTopology: true },
@@ -17,65 +13,12 @@ MongoClient.connect(
       return console.log("Unable to connect to database!");
     }
 
-    console.log("Connected correctly!");
-
-    const db = client.db(databaseName);
-    db.collection("users").insertOne(
-      {
-        _id: id,
-        name: "George",
-        age: 32
-      },
-      (error, result) => {
-        if (error) {
-          console.log("Unable to insert a user!");
-        }
-
-        console.log(result.ops);
+    db.collection("users").findOne({ name: "Jess" }, (error, user) => {
+      if (error) {
+        return console.log("Unable to fetch!");
       }
-    );
 
-    // db.collection("users").insertMany(
-    //   [
-    //     {
-    //       name: "Jess",
-    //       age: 31
-    //     },
-    //     {
-    //       name: "Bob",
-    //       age: 25
-    //     }
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Unable to insert users!");
-    //     }
-
-    //     console.log(result.ops);
-    //   }
-    // );
-
-    // db.collection("tasks").insertMany(
-    //   [
-    //     {
-    //       description: "Wash dished",
-    //       completed: true
-    //     },
-    //     {
-    //       description: "Water plants",
-    //       completed: true
-    //     },
-    //     {
-    //       description: "Feed the dinos",
-    //       completed: false
-    //     }
-    //   ],
-    //   (error, result) => {
-    //     if (error) {
-    //       return console.log("Can not insert the tasks");
-    //     }
-    //     console.log(result.ops);
-    //   }
-    // );
+      console.log(user);
+    });
   }
 );
