@@ -21,13 +21,29 @@ MongoClient.connect(
           _id: new ObjectID("5e0de564e812620868f973e7")
         },
         {
-          $set: {
-            name: "Mike"
+          $inc: {
+            age: 2
           }
         }
       )
       .then(result => {
         console.log(result);
+      })
+      .catch(error => {
+        console.log("Error!", error);
+      });
+
+    db.collection("tasks")
+      .updateMany(
+        { completed: false },
+        {
+          $set: {
+            completed: true
+          }
+        }
+      )
+      .then(result => {
+        console.log(result.modifiedCount);
       })
       .catch(error => {
         console.log("Error!", error);
