@@ -15,12 +15,15 @@ MongoClient.connect(
 
     const db = client.db(databaseName);
 
-    db.collection("users").findOne({ name: "Jess" }, (error, user) => {
-      if (error) {
-        return console.log("Unable to fetch!");
-      }
+    db.collection("users").findOne(
+      { _id: new ObjectID("5e0de564e812620868f973e7") },
+      (error, user) => {
+        if (error) {
+          return console.log("Unable to fetch!");
+        }
 
-      console.log(user);
-    });
+        console.log(user);
+      }
+    );
   }
 );
