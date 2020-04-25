@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "request": "^2.88.0",
+    "axios": "^0.19.2",
     "yargs": "^15.0.2"
   }
 }
